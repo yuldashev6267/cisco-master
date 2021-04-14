@@ -6,7 +6,6 @@ import classes from "./styles.module.css";
 
 const AdminSideBar = () => {
   const [activeMenu, setActiveMenu] = useState();
-
   return (
     <div className={classes.sidebar}>
       <div className={classes.sidebar__logo}>
