@@ -16,7 +16,6 @@ const Model = () => {
 
   const history = useHistory();
   const [about,setAbout] = useState(false)
-  console.log(about)
   const handleAbout = ()=>{
     setAbout(true)
   }

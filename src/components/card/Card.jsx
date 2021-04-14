@@ -30,8 +30,7 @@ const Card = (props) => {
     formData.append("number", data.number);
     formData.append("description", data.description);
     formData.append("photo", data.photo[0]);
-    console.log(formData);
-    console.log(data.photo);
+
     props.addShops(formData);
   };
 

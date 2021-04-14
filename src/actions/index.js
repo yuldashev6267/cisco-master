@@ -19,18 +19,14 @@ export const addRequest = (data) => async (dispatch) => {
   try {
     const res = await instance.post("/add-request", data);
     dispatch({ type: ADD_REQUEST, payload: res.data });
-  } catch (error) {
-    console.log(error.response.data);
-  }
+  } catch (error) {}
 };
 export const getAllRequest = () => async (dispatch) => {
   try {
     const res = await instance.get("/all-requests");
     dispatch({ type: GET_ALL_REQUEST, payload: res.data.data.userRequests });
     dispatch(currentAdmin());
-  } catch (error) {
-    console.log(error.response.data);
-  }
+  } catch (error) {}
 };
 
 export const userLogin = (data) => async (dispatch) => {
@@ -40,7 +36,6 @@ export const userLogin = (data) => async (dispatch) => {
     dispatch(currentAdmin());
     history.push("/adminpanel");
   } catch (error) {
-    console.log(error.message);
     dispatch({ type: LOG_IN_ERROR, payload: error.response.data });
     setTimeout(() => {
       dispatch({ type: LOG_IN_ERROR, payload: null });
@@ -55,29 +50,22 @@ export const currentAdmin = () => async (dispatch) => {
   try {
     const res = await instance.get("/get-admin");
     dispatch({ type: GET_CURRENT_ADMIN, payload: res.data });
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };
 
 export const addShops = (data) => async (dispatch) => {
   try {
     const res = await instance.post("/add-point-of-sales", data);
-    console.log(data);
     dispatch({ type: ADD_SHOPS });
     history.push("/admin-point-of-sales");
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };
 export const getAllShops = () => async (dispatch) => {
   try {
     const res = await instance.get("/get-all-shops");
     dispatch({ type: GET_ALL_SHOPS, payload: res.data.data.shops });
     dispatch(currentAdmin());
-  } catch (error) {
-    console.log(error.response.data);
-  }
+  } catch (error) {}
 };
 
 export const getCurrentShop = (id) => async (dispatch) => {
@@ -90,19 +78,14 @@ export const getCurrentShop = (id) => async (dispatch) => {
 export const editShops = (data, id) => async (dispatch) => {
   try {
     const res = await instance.patch(`/update-shop/${id}`, data);
-    console.log(data.id);
     dispatch({ type: UPDATE_SHOPS });
     history.push("/admin-point-of-sales");
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };
 
 export const deleteShop = (id) => async (dispatch) => {
   try {
     const res = await instance.delete(`/delete-shop/${id}`);
     dispatch({ type: DELETE_SHOP, payload: res.data });
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };
