@@ -6,7 +6,6 @@ import ProtectedRouter from "../../components/protectedRouter/ProtectedRouter";
 import OurShops from "../../components/ourShops/OurShops";
 import AddPointOfSales from "../../components/addPointOfSales/AddPointOfSales";
 import EditPointOfSales from "../../components/editPointofSales/EditPointOfSales";
-import AddProducts from "../../components/addProducts/AddProducts";
 const loginPage = () => {
   return (
     <>
@@ -27,7 +26,6 @@ const loginPage = () => {
         path="/edit-point-of-sales-shops/:id"
         component={EditPointOfSales}
       />
-      <ProtectedRouter exact path="/add-products" component={AddProducts} />
     </>
   );
 };

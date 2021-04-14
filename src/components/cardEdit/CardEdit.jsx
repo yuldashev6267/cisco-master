@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
 const Card = (props) => {
   const { register, control, handleSubmit, setValue } = useForm();
 
-  console.log(props.shops.shop, "shop data");
   const classes = useStyles();
   useEffect(() => {
     props.getCurrentShop(props.id);
