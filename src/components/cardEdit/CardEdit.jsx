@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
-import { useForm, Controller } from "react-hook-form";
+import { useFormik } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import FormGroup from "@material-ui/core/FormGroup";
 import Button from "@material-ui/core/Button";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import Paper from "@material-ui/core/Paper";
+import { useForm, Controller } from "react-hook-form";
+
 import Input from "@material-ui/core/Input";
 import { editShops, getCurrentShop } from "../../actions";
 const useStyles = makeStyles((theme) => ({
@@ -18,26 +20,33 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Card = (props) => {
-  useEffect(() => {
-    props.getCurrentShop();
-  }, []);
-  const { control, handleSubmit } = useForm();
+  const { register, control, handleSubmit, setValue } = useForm();
+
+  console.log(props.shops.shop, "shop data");
   const classes = useStyles();
-  console.log(props.shops);
-  const onSubmit = (data) => {
-    props.editShops(data, props.shops.shop._id);
-  };
+  useEffect(() => {
+    props.getCurrentShop(props.id);
+
+    if (props?.shops?.shop) {
+      setValue("shopName", props?.shops?.shop?.shopName);
+      setValue("url", props?.shops?.shop?.url);
+      setValue("location", props?.shops?.shop?.location);
+      setValue("number", props?.shops?.shop?.number);
+      setValue("description", props?.shops?.shop?.description);
+    }
+  }, [props?.shops?.shop?._id]);
+  const onSubmit = (data) => props.editShops(data, props.id);
+
   return (
     <Paper className={classes.root} elevation={8}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
-          defaultValue="Shorda qiymat galama"
+          defaultValue=""
           name="shopName"
           render={({ field }) => (
             <TextField
               id="filled-helperText"
-              label="Наименование точки"
               helperText="Введите новый текст"
               {...field}
             />
@@ -112,4 +121,7 @@ const Card = (props) => {
 
 const mapStateToProps = (state) => ({ shops: state.shops });
 
-export default connect(mapStateToProps, { editShops, getCurrentShop })(Card);
+export default connect(mapStateToProps, {
+  editShops,
+  getCurrentShop,
+})(Card);

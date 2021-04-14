@@ -62,9 +62,8 @@ export const currentAdmin = () => async (dispatch) => {
 
 export const addShops = (data) => async (dispatch) => {
   try {
-    const res = await instance.post("/add-point-of-sales", data, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    const res = await instance.post("/add-point-of-sales", data);
+    console.log(data);
     dispatch({ type: ADD_SHOPS });
     history.push("/admin-point-of-sales");
   } catch (error) {
@@ -91,6 +90,7 @@ export const getCurrentShop = (id) => async (dispatch) => {
 export const editShops = (data, id) => async (dispatch) => {
   try {
     const res = await instance.patch(`/update-shop/${id}`, data);
+    console.log(data.id);
     dispatch({ type: UPDATE_SHOPS });
     history.push("/admin-point-of-sales");
   } catch (error) {

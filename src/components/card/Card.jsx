@@ -18,31 +18,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Card = (props) => {
+  const { register, control, handleSubmit } = useForm();
   const classes = useStyles();
-  const [postImage, setPostImage] = useState(null);
-  const handleChange = (e) => {
-    console.log(e.target);
-    if (e.target.name === "image") {
-      setPostImage(e.target.files[0]);
-      console.log(e.target.files);
-    }
-  };
-
-  const { control, handleSubmit } = useForm();
+  let formData;
   const onSubmit = (data) => {
-    const fd = new FormData();
-    fd.append("photo", postImage);
-    fd.append("shopName", data.shopName);
-    fd.append("description", data.description);
-    fd.append("number", data.number);
-    fd.append("url", data.url);
-    fd.append("location", data.location);
-    props.addShops(fd);
+    formData = new FormData();
+
+    formData.append("shopName", data.shopName);
+    formData.append("url", data.url);
+    formData.append("location", data.location);
+    formData.append("number", data.number);
+    formData.append("description", data.description);
+    formData.append("photo", data.photo[0]);
+    console.log(formData);
+    console.log(data.photo);
+    props.addShops(formData);
   };
 
   return (
     <Paper className={classes.root} elevation={8}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form ref={formData} onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
           defaultValue=""
@@ -95,6 +90,7 @@ const Card = (props) => {
             />
           )}
         />
+
         <Controller
           control={control}
           defaultValue=""
@@ -113,6 +109,14 @@ const Card = (props) => {
               {...field}
             />
           )}
+        />
+
+        <input
+          name="photo"
+          id="filled-helperText"
+          type="file"
+          accept=".jpeg,.png,.jpg"
+          {...register("photo")}
         />
 
         <Button variant="contained" color="primary" type="submit" fullWidth>
